@@ -253,11 +253,3 @@ if __name__ == "__main__":
         )
 
 
-# Validate data before saving
-validate_weather_data(new_data)
-
-# Upsert only if validation passes
-final_data = upsert_weather_data(new_data)
-
-print("\nLatest saved records:")
-print(final_data.tail())
