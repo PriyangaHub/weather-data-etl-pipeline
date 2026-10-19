@@ -226,10 +226,32 @@ def validate_weather_data(data):
 
 
 
-# Main execution section
-new_data = extract_weather_data()
 
-print(new_data.head())
+# Main execution section
+if __name__ == "__main__":
+    try:
+        new_data = extract_weather_data()
+
+        print(new_data.head())
+
+        # Validate data before saving
+        validate_weather_data(new_data)
+
+        # Upsert only if validation passes
+        final_data = upsert_weather_data(new_data)
+
+        print("\nLatest saved records:")
+        print(final_data.tail())
+
+        logging.info("Weather pipeline completed successfully")
+
+    except Exception:
+        logging.exception("Weather pipeline failed")
+        print(
+            "\nWeather pipeline failed. "
+            "Please check the log file for details."
+        )
+
 
 # Validate data before saving
 validate_weather_data(new_data)
